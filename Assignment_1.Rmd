@@ -15,16 +15,58 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r libraries}
+# example codesummary(cars)
+library(tidyverse)
+library(tidyr)
+library(skimr)
+library(sf)
+library(ggthemes)
 ```
+```{r poly_data_load_in}
+#st_read can read database and spatial files connected to a url
 
+
+
+## neighborhood polygon##
+#neigh_poly<-st_read("https://opendata.arcgis.com/datasets/2f54a0cbd67046f2bd100fb735176e6c_0.geojson")
+
+
+##watershed polygon##
+watershed_shape<-st_read("https://opendata.arcgis.com/datasets/aec9f0fc40e548f9be12e91565191a1f_0.geojson")
+## census tract polygon ##
+#st_read()
+## land use polygon##
+#land_use<-st_read("https://opendata.arcgis.com/datasets/8de16327673e444a91c1df491fefef5f_0.geojson")
+##
+##flood-zones##
+flood_zones<-st_read("https://opendata.arcgis.com/datasets/ef3bdd041b2e424695eb4dfe965966c4_0.geojson")
+##
+
+##Demographics##
+#demographics<- st_read("/Users/MJSuper/Documents/spatial_analysis_/data_sets/tl_2019_12_tract")
+##
+
+## building Foot print##
+#building_foot_print<-st_read("https://opendata.arcgis.com/datasets/d511e9ebc5aa4f49a23ff5fa2fb99786_0.geojson")
+
+
+```
 ## Including Plots
 
 You can also embed plots, for example:
+```{r point_load_in `echo=FALSE` }
+environment_permit<- st_read("https://opendata.arcgis.com/datasets/1c81f3c9fafb4a92bceb73207ec225dd_1.geojson")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+##miami_census_tracts/city boudnary
+maimi_tract<- st_read("/Users/MJSuper/Documents/spatial_analysis_/data_sets/Miami_v1.1")
+
+##water_shed_data##
+#watershed_data<-st_read("https://opendata.arcgis.com/datasets/64fa2d27610344a995e989d2ea2b9f7a_12.geojson")
+
+```
+```{r test plot, echo=FALSE}
+ggplot(maimi_tract)+geom_sf(fill="blue",color="black",size=.02)+geom_sf(data=flood_zone,size =.01,color="pink")+ geom_sf(data=environment_permit,size=.01,color="dark green",alpha=.5)+ geom_sf(data= watershed_shape,size=.01) #+ geom_sf(data = neigh_poly, fill = NA, color ="gray")#+ geom_sf(data =demographics,size =.01)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
